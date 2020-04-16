@@ -1,0 +1,88 @@
+<!-- if debug set to true, context info always print otherwise the contex 
+	info will print when error occour -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<property name="TOMCAT_HOME" value="../logs/" />
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{10}[%L] - %msg%n
+			</pattern>
+			<charset class="java.nio.charset.Charset">UTF-8</charset>
+
+		</layout>
+	</appender>
+
+	<!-- 所有日志文件 -->
+	<appender name="AllLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${TOMCAT_HOME}/%d{yyyy-MM-dd}.log.gz
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{10}[%L] - %msg%n
+			</pattern>
+
+		</encoder>
+		<charset class="java.nio.charset.Charset">UTF-8</charset>
+
+	</appender>
+
+
+	<appender name="data"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${TOMCAT_HOME}/db_%d{yyyy-MM-dd}.log.gz
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{10}[%L] - %msg%n
+			</pattern>
+
+		</encoder>
+		<charset class="java.nio.charset.Charset">UTF-8</charset>
+
+	</appender>
+
+
+	<appender name="baidu"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${TOMCAT_HOME}/baidu_%d{yyyy-MM-dd}.log.gz
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{10}[%L] - %msg%n
+			</pattern>
+
+		</encoder>
+		<charset class="java.nio.charset.Charset">UTF-8</charset>
+
+	</appender>
+	<root level="info">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="AllLog" />
+	</root>
+	<logger name="net.sf.json" level="error" />
+	<logger name="cn.beeagle.zhishu.baidu.com.util" level="debug" />
+	<logger name="com.ehking.sdk" level="debug" />
+
+	<logger name="cn.beeagle.util" level="error">
+	</logger>
+	<logger name="cn.beeagle.bbc" level="debug"/>
+	<logger name="cn.beeagle.app.taobao.shop" level="info">
+	</logger>
+	<logger name="cn.beeagle.app.taobao.shop.service" level="info">
+		<appender-ref ref="data" />
+	</logger>
+	<logger name="com.beeagle.app.udpclient" level="info">
+	</logger>
+	<logger name="httprequest" level="info">
+		<appender-ref ref="baidu" />
+	</logger>
+
+
+</configuration>
